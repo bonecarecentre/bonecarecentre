@@ -1,0 +1,199 @@
+<html>
+<head>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-functions.js"></script>
+
+<script src="myfirebase.js"></script>
+ <title>Bone Care Centre</title>
+
+ <link href="resources/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body onload="redirect()">
+
+<div id="footer" class="row">
+   <div class="col-md-6 col-sm-6 col-xs-6">WELCOME</div>
+   <div class="col-md-6 col-sm-6 col-xs-6 text-right" id="userstatus"></div>
+</div>
+<br>
+<div class="row" id="mainbuttons">
+  <button class="col-md-12 col-sm-12 col-xs-12"style="background-color: #ffffff; color: black; font-size: 40px; height: 140px;"id="btnaddpatient" onclick="addpatientfunc()">ADD PATIENT</button>
+  <button class="col-md-12 col-sm-12 col-xs-12"style="background-color: #c4c4c4; color: black; font-size: 40px; height: 140px;"id="btnlogout" onclick="patientdetails()">PATIENT DETAILS</button>
+  <button class="col-md-12 col-sm-12 col-xs-12 hide"style="background-color: #a3a3a3; color: black; font-size: 40px; height: 140px;"id="btnverifyacc" onclick="verifyaccfunc()">VERIFY ACCOUNT</button>
+  <button class="col-md-12 col-sm-12 col-xs-12"style="background-color: #d80606; color: white; font-size: 40px; height: 140px;"id="btnlogout" onclick="logoutfunc()">LOG OUT</button>
+</div>
+<div id="myModal-verifyacc" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h1>Verify Account</h1>
+    UID(User ID):<br> <input type="text" name="userid" id="userid">*Required<br>
+    Name:<br> <input type="text" name="name" id="inputname">*Required<br>
+    <form>
+      Account Type<br>
+      <input class="radioinput" type="radio" name="acctype" id="admin" checked="true">Administrator<br>
+      <input class="radioinput" type="radio" name="acctype" id="manager">Manager<br>
+    </form>
+    <button class="modalbtn"onclick="confirmverifyacc()">Verify Account</button>
+  </div>
+
+</div>
+<div id="myModal-addpatient" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h1>Add Patient</h1>
+    Name:<br> <input type="text" name="pname" id="inputpname">*Required<br>
+    Date of Birth:<br> <input type="date" id="inputpdob">*Required<br>
+    <form>
+      Gender<br>
+      <input class="radioinput" type="radio" name="gender"id="pmale" checked="true">Male<br>
+      <input class="radioinput" type="radio" name="gender"id="pfemale">Female<br>
+    </form>
+        <button class="modalbtn" onclick="confirmaddpatient()">Confirm</button>
+  </div>
+
+</div>
+<div id="myModal-patientdetails" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Patient Details</h2>
+    <div class="tab">
+      <button id="searchtab" class="tablinks1" onclick="openpatienttab(event, 'search')">Search Patient</button>
+      <button class="tablinks1" onclick="openpatienttab(event, 'viewAll')">Retrieve Patient List</button>
+    </div>
+    <div id="search" class="tabcontent1">
+      <h3>Search Patient</h3>
+      Patient Name: <input type="text" name="pname" id="searchpname">*Required<br><br>
+      <button class="modalbtn" onclick="searchpatient()">Search</button>
+    </div>
+    <div id="viewAll" class="tabcontent1">
+      
+      <div>
+        <table id="patientslisttable">
+          <thead >
+          <tr>
+            <th style="width:60%">Name</th>
+            <th style="width:40%">Date of Birth</th>
+            <th style="width:20%">Gender</th>
+          </tr>
+        </thead>
+        <tbody id="tablebody">
+        </tbody>
+        </table>
+      <div>
+    </div>
+  </div>
+</div>
+
+<div id="myModal-searchres" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Search Result</h2>
+    <div>
+      <table id="searchresult">
+        <thead >
+        <tr>
+          <th style="width:60%">Name</th>
+          <th style="width:40%">Date of Birth</th>
+          <th style="width:20%">Gender</th>
+        </tr>
+      </thead>
+      <tbody id="tablebody">
+      </tbody>
+      </table>
+    <div>
+  </div>
+</div>
+
+<div id="myModal-patientrec" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Patient Data</h2>
+    <div>Name: <span id="patientname"></span></div>
+    <div>Date of Birth: <span id="patientdob"></span></div>
+    <div>Gender: <span  id="patientgender"></span></div>
+    <div class="tab smalltab">
+      <button id="addvisittab"class="tablinks2" onclick="openpatientrectab(event, 'addvisit')">Add Visit</button>
+      <button class="tablinks2" onclick="openpatientrectab(event, 'viewlast')">View Last Visit</button>
+      <button class="tablinks2" onclick="openpatientrectab(event, 'viewhistory')">View Visit History</button>
+    </div>
+
+    <div id="addvisit" class="tabcontent2">
+      <h3>Add Visit</h3>
+      Visit date:<br> <input type="date" id="inputvisitdate">*Required<br>
+      Visit time:<br> <input type="time" id="inputvisittime">*Required<br>
+      Prescription:<br> <textarea id="inputprescription"></textarea><br>
+      Doctor notes:<br> <textarea id="inputdoctornotes"></textarea><br>
+      Next appointment:<br> <input type="date" id="inputnextappointment"><br><br>
+      <button id="btnaddvisit" class="modalbtn" onclick="confirmaddvisit()">Confirm</button>
+    </div>
+    <div id="viewlast" class="tabcontent2">
+      <div id="lastvisitdetails">
+        <h3>Last Visit</h3>
+        <div>Visit date: <span id="visitdate"></span></div>
+        <div>Visit time: <span id="visittime"></span></div>
+        <div>Prescription: <textarea id="prescription" readonly></textarea></div>
+        <div>Doctor notes: <textarea id="doctornotes" readonly></textarea></div>
+        <div>Next appointment: <span  id="nextappointment"></span></div>
+      </div>
+      <h2 id="lastvisitstatus" style="display: none">No visit history.<h2>
+    </div>
+    <div id="viewhistory" class="tabcontent2">
+      <div id="lastvisitdetails">
+        <h3>Visit History</h3>
+        <div>
+          <table id="visithistorytable">
+            <thead >
+            <tr>
+              <th style="width:100%">Date</th>
+              <th style="width:100%">Time</th>
+            </tr>
+          </thead>
+          <tbody id="tablebody">
+          </tbody>
+          </table>
+          <h2 id="visithistorystatus" style="display: none">No visit history.<h2>
+        <div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="myModal-addvisit" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    
+  </div>
+</div>
+<div id="myModal-visitdetails" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span id="visitdetailsclose" class="close">&times;</span>
+    <h2>Visit Details</h2>
+    <div id="visitdetails">
+        <div>Visit date: <span id="visitdate1"></span></div>
+        <div>Visit time: <span id="visittime1"></span></div>
+        <div>Prescription: <textarea id="prescription1" readonly></textarea></div>
+        <div>Doctor notes: <textarea id="doctornotes1" readonly></textarea></div>
+        <div>Next appointment: <span  id="nextappointment1"></span></div>
+      </div>
+  </div>
+</div>
+ <script src="resources/jquery.min.js"></script>
+ <script src="resources/bootstrap.min.js"></script>
+<script src="main.js"></script>
+
+  
+</body>
+</html>

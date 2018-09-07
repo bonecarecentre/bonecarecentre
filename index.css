@@ -1,0 +1,237 @@
+body {
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    align-content: center;
+    font-size: 20px;
+}
+
+/* The Close Button */
+.close {
+    color: #d80606;
+    float: right;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hide {
+    display:none;
+}
+
+.modalbtn {
+    height: auto;
+    width: 100%;
+    font-size: 30px;
+    color: black;
+}
+.modalbtnsmall {
+    height: auto;
+    width: 32.5%;
+    font-size: 20px;
+    color: black;
+
+}
+.modalbtn:hover, .modalbtnsmall:hover {
+    background-color: white !important; /* Green */
+    color: d80606 !important;
+}
+.blur {
+     filter: blur(3px);
+}
+
+#title {
+    text-align: center;
+    font-size: 60px;
+    background-color: d80606;
+    height: 80px;
+    font-family: Impact, Charcoal, sans-serif;
+}
+#footer {
+    text-align: left;
+    font-size: 40px;
+    background-color: d80606;
+    height: auto;
+    font-family: Impact, Charcoal, sans-serif;
+}
+#maincontent {
+    color: white;
+    font-size: 40px;
+    font-family: "Courier New", Courier, monospace;
+}
+#mainbuttons {
+    font-size: 40px;
+    font-family: "Courier New", Courier, monospace;
+}
+
+#btnlogin {
+    float: right;
+    width: 300px;
+    font-size: 50px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}
+input {
+    width: 50%;
+    background-color: #d80606;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+}
+textarea {
+   font-family: "Courier New", Courier, monospace;
+}
+span {
+   font-family: "Courier New", Courier, monospace;
+}
+.radioinput {
+    width: auto;
+}
+body {
+    background-color: black;
+}
+.modalsmallbtn{
+    width: 100%;
+    font: 30px;
+    height: 50px;
+    color: black;
+}
+.modalsmallbtn:hover {
+    background-color: white !important; /* Green */
+    color: d80606 !important;
+}
+#patientslisttable, #searchresult, #visithistorytable{
+      display: block;
+      width: 100%;
+      height: 350px;
+      overflow-y: scroll;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    height: 20px !important;
+}
+thead {
+    background-color: #d80606;
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}   
+
+.loader {
+  position: relative;
+}
+
+.loader::after {
+  background-image: url("resources/loading.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  content:"";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+#searchresult tbody tr:hover, #visithistorytable tbody tr:hover {
+  background-color: #494949;
+  color: white;
+  cursor: pointer;
+}
+textarea {
+    overflow-y: scroll;
+    height: 100px;
+    width: 100%;
+    resize: none;
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: #inheret;
+    font-size: 20px;
+    color: black;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    height: auto;
+    width: 50%;
+}
+.smalltab button{
+  width:33.3333%;
+}
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: white;
+    color: #d80606;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #d80606;
+    color: white;
+}
+
+/* Style the tab content */
+.tabcontent1, .tabcontent2 {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+.tabactive {
+    display: block;
+}
+textarea:-moz-read-only { /* For Firefox */
+    background-color: yellow;
+}
+textarea:read-only {
+  background-color: #ededed;
+}

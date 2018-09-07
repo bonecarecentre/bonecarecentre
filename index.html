@@ -1,0 +1,79 @@
+<html>
+<head>
+<!--Scripts -->
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-database.js"></script>
+<script src="myfirebase.js"></script>
+  <title>Bone Care Centre</title>
+ <link href="resources/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+<div id="title">BONE CARE CENTRE</div>
+<br><br>
+<div id="maincontent">
+Email: <br><input type="text" name="name" id="inputemail"><br>
+Password: <br><input type="password" name="password" id="inputpwd"><br><br>
+<button class="modalbtn" id="btnlogin" onclick="myfunc()">Log In</button>
+</div>
+<script>
+var email = document.querySelector('#inputemail');
+var pwd = document.querySelector('#inputpwd');
+
+function myfunc() {
+
+		firebase.auth().signInWithEmailAndPassword(email.value, pwd.value).catch(function(error) {
+		  // Handle Errors here.
+		  var errorCode = error.code;
+		  var errorMessage = error.message;
+		    if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+		});
+}
+
+ function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        // [START_EXCLUDE silent]
+        //document.getElementById('quickstart-verify-email').disabled = true;
+        // [END_EXCLUDE]
+        if (user) {
+          // User is signed in.
+      	  document.location.href = "main.html";
+      	
+          // [END_EXCLUDE]
+        } else {
+          //alert("not signed in");
+        }
+        // [START_EXCLUDE silent]
+        //document.getElementById('quickstart-sign-in').disabled = false;
+        // [END_EXCLUDE]
+      });
+      // [END authstatelistener]
+
+    }
+    window.onload = function() {
+      var x=0;
+      setInterval(function(){ 
+        if(x==1){
+        document.getElementById("title").style.color = "white";  
+          x=0;
+        }
+        else {
+          document.getElementById("title").style.color = "black";  
+          x=1;
+        }
+      }, 3000);
+        
+      initApp();
+    };
+</script>
+ <script src="resources/jquery.min.js"></script>
+ <script src="resources/bootstrap.min.js"></script>
+</body>
+</html>
